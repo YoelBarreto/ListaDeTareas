@@ -1,4 +1,0 @@
-package modelview
-
-class TaskApp {
-}
