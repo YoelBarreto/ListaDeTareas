@@ -3,6 +3,7 @@ package com.yoel.composeroomapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import view.*
 
 class MainActivity : ComponentActivity() {
     //private lateinit var database: AppDatabase
