@@ -20,7 +20,7 @@ Es la idea de la interfaz antes de crear el programa para saber como organizarlo
 
 Es la idea de la parte de edición de tipos para las tareas
 
-![tiposfinal](https://github.com/user-attachments/assets/1af265fa-9f18-4c76-990e-b6615759f057)
+![tiposfinalfinal](https://github.com/user-attachments/assets/6b8fe2d8-cb5d-420b-bf03-0d4cea17665f)
 
 
 ## App
