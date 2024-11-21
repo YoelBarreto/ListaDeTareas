@@ -3,12 +3,15 @@ package view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -162,12 +165,22 @@ fun TaskApp(database: AppDatabase) {
                  Column {
                      // Mostrar lista de tareas
                      tasks.forEach { taskWithTypeTask ->
-                         val task = taskWithTypeTask.task
-                         val typeTask = taskWithTypeTask.typeTask
-                         Text(
-                             text = "${task.titulo} - ${task.descripcion} (${typeTask.titulo})",
-                             modifier = Modifier.padding(vertical = 8.dp)
-                         )
+                         Box(
+                             modifier = Modifier
+                                 .padding(bottom = 10.dp)
+                                 .clip(shape = RoundedCornerShape(10.dp))
+                                 .background(Color(0xFFF1C7FF))
+                                 .height(50.dp)
+                         ){
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                val task = taskWithTypeTask.task
+                                val typeTask = taskWithTypeTask.typeTask
+                                Text(
+                                    text = "${task.titulo} - ${task.descripcion} (${typeTask.titulo})",
+                                    modifier = Modifier.padding(vertical = 8.dp)
+                                )
+                            }
+                         }
                      }
                  }
              }
