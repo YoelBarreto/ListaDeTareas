@@ -7,18 +7,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import data.AppDatabase
 import data.Task
+import data.TypeTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
 fun TaskApp(database: AppDatabase) {
     val taskDao = database.taskDao()
+    val typeTaskDao = database.typeTaskDao()
     val scope = rememberCoroutineScope()
     var tasks by remember { mutableStateOf(listOf<Task>()) }
+    var typeTasks by remember { mutableStateOf(listOf<TypeTask>()) }
     var newTaskName by remember { mutableStateOf("") }
+    var newTaskDesc by remember { mutableStateOf("") }
+    var newTypeTaskName by remember { mutableStateOf("") }
 
     // Cargar tareas al iniciar
     LaunchedEffect(Unit) {
+        typeTasks = typeTaskDao.getAllTypeTasks()
         tasks = taskDao.getAllTasks()
     }
 
@@ -33,7 +39,19 @@ fun TaskApp(database: AppDatabase) {
         androidx.compose.material.OutlinedTextField(
             value = newTaskName,
             onValueChange = { newTaskName = it },
-            label = { androidx.compose.material.Text("New Task") },
+            label = { androidx.compose.material.Text("Tarea") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        androidx.compose.material.OutlinedTextField(
+            value = newTaskDesc,
+            onValueChange = { newTaskDesc = it },
+            label = { androidx.compose.material.Text("Descripción") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        androidx.compose.material.OutlinedTextField(
+            value = newTypeTaskName,
+            onValueChange = { newTypeTaskName = it },
+            label = { androidx.compose.material.Text("Tipo") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -41,8 +59,10 @@ fun TaskApp(database: AppDatabase) {
         androidx.compose.material.Button(
             onClick = {
                 scope.launch(Dispatchers.IO) {
-                    val newTask = Task(name = newTaskName)
-                    taskDao.insert(newTask)
+                    val newType = TypeTask(titulo = newTypeTaskName)
+                    val newTask = Task(titulo = newTaskName, descripcion = newTaskDesc, typeTaskId = 1)
+                    taskDao.insertTask(newTask)
+
                     tasks = taskDao.getAllTasks() // Actualizar la lista
                     newTaskName = "" // Limpiar el campo
                 }
@@ -53,7 +73,10 @@ fun TaskApp(database: AppDatabase) {
 
         // Mostrar lista de tareas
         tasks.forEach { task ->
-            androidx.compose.material.Text(text = task.name, modifier = Modifier.padding(vertical = 8.dp))
+            androidx.compose.material.Text(
+                text = "${task.titulo} - ${task.descripcion}",
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
         }
     }
 }
