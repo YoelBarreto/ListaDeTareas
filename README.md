@@ -5,6 +5,10 @@ El modelo de los datos seguira esta estructura:
 
 ![modelodatos](https://github.com/user-attachments/assets/a53ccc0b-9f87-4e9a-84d1-a7b948cc4f64)
 
+Ordenadas en estos archivos.
+
+![archivos](https://github.com/user-attachments/assets/37c63be9-110e-488e-b18b-1b43b6602061)
+
 
  ## Boceto de la interfaz
 
