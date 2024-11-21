@@ -170,9 +170,17 @@ fun TaskApp(database: AppDatabase) {
                                  .padding(bottom = 10.dp)
                                  .clip(shape = RoundedCornerShape(10.dp))
                                  .background(Color(0xFFF1C7FF))
-                                 .height(50.dp)
+                                 .height(65.dp)
                          ){
                             Row(modifier = Modifier.fillMaxWidth()) {
+
+
+
+
+
+
+
+
                                 val task = taskWithTypeTask.task
                                 val typeTask = taskWithTypeTask.typeTask
                                 Text(
