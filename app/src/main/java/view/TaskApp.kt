@@ -1,9 +1,12 @@
 package view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import data.AppDatabase
 import data.Task
@@ -31,7 +34,9 @@ fun TaskApp(database: AppDatabase) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .background(Color(0xFFEAA9FF))
+            .fillMaxSize()
+            .padding(15.dp),
 
     ) {
         Row {
@@ -39,21 +44,74 @@ fun TaskApp(database: AppDatabase) {
                 value = newTaskName,
                 onValueChange = { newTaskName = it },
                 label = { androidx.compose.material.Text("Tarea") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .width(150.dp)
+                    .padding(end = 3.dp)
+                    .background(Color(0xFFF1C7FF))
             )
+            androidx.compose.material.OutlinedTextField(
+                value = newTypeTaskName,
+                onValueChange = { newTypeTaskName = it },
+                label = { androidx.compose.material.Text("Tipo") },
+                modifier = Modifier
+                    .width(150.dp)
+                    .background(Color(0xFFF1C7FF))
+            )
+            Button(
+                onClick = {
+                },
+                modifier = Modifier
+                    .padding(start = 5.dp, top = 5.dp)
+                    .height(80.dp)
+            ) {
+                Text("Editar")
+            }
+        }
+        Row {
             androidx.compose.material.OutlinedTextField(
                 value = newTaskDesc,
                 onValueChange = { newTaskDesc = it },
                 label = { androidx.compose.material.Text("Descripción") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .width(380.dp)
+                    .background(Color(0xFFF1C7FF))
             )
         }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+                .width(120.dp)
+                .height(50.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            androidx.compose.material.Button(
+                modifier = Modifier,
+                onClick = {
+                    scope.launch(Dispatchers.IO) {
+                        val newType = TypeTask(titulo = newTypeTaskName)
+                        typeTaskDao.insertTypeTask(newType)
 
+                        val insertedTypeId = typeTaskDao.getAllTypeTasks()
+                            .last().id // Obtener el ID del nuevo TypeTask
+                        val newTask = Task(
+                            titulo = newTaskName,
+                            descripcion = newTaskDesc,
+                            typeTaskId = insertedTypeId
+                        )
+                        taskDao.insertTask(newTask)
 
-
-
-
-
+                        tasks =
+                            taskDao.getTasksWithTypeTasks() // Actualizar lista con relación completa
+                        newTaskName = ""
+                        newTaskDesc = ""
+                        newTypeTaskName = ""
+                    }
+                }
+            ) {
+                androidx.compose.material.Text("Add Task")
+            }
+        }
     }
 
 
