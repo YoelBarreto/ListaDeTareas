@@ -10,7 +10,13 @@ El modelo de los datos seguira esta estructura:
 
 Es la idea de la interfaz antes de crear el programa para saber como organizarlo.
 
-![lista2](https://github.com/user-attachments/assets/4b195fd5-4616-4f78-afde-0cc1517c4cdf)
+![listafinal](https://github.com/user-attachments/assets/496fb44c-447c-4f4f-a2f2-a468a063cccb)
+
+### La pantalla de edición de tipos
+
+Es la idea de la parte de edición de tipos para las tareas
+
+![tiposfinal](https://github.com/user-attachments/assets/1af265fa-9f18-4c76-990e-b6615759f057)
 
 
 ## App
