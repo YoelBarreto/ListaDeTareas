@@ -62,7 +62,7 @@ fun TaskApp(database: AppDatabase) {
                 },
                 modifier = Modifier
                     .padding(start = 5.dp, top = 5.dp)
-                    .height(80.dp)
+                    .height(60.dp)
             ) {
                 Text("Editar")
             }
@@ -80,13 +80,13 @@ fun TaskApp(database: AppDatabase) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
-                .width(120.dp)
-                .height(50.dp),
+                .padding(top = 20.dp, bottom = 20.dp),
             horizontalArrangement = Arrangement.Center
         ) {
             androidx.compose.material.Button(
-                modifier = Modifier,
+                modifier = Modifier
+                    .width(170.dp)
+                    .height(50.dp),
                 onClick = {
                     scope.launch(Dispatchers.IO) {
                         val newType = TypeTask(titulo = newTypeTaskName)
@@ -109,9 +109,38 @@ fun TaskApp(database: AppDatabase) {
                     }
                 }
             ) {
-                androidx.compose.material.Text("Add Task")
+                androidx.compose.material.Text("Añadir Tarea")
             }
         }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp, bottom = 20.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+             Column(
+                 horizontalAlignment = Alignment.CenterHorizontally,
+             ) {
+                 Text(
+                     text = "Lista de Tareas",
+                     style = MaterialTheme.typography.h5,
+                     modifier = Modifier.padding(bottom = 16.dp)
+                 )
+
+                 // Mostrar lista de tareas
+                 tasks.forEach { taskWithTypeTask ->
+                     val task = taskWithTypeTask.task
+                     val typeTask = taskWithTypeTask.typeTask
+                     androidx.compose.material.Text(
+                         text = "${task.titulo} - ${task.descripcion} (${typeTask.titulo})",
+                         modifier = Modifier.padding(vertical = 8.dp)
+                     )
+                 }
+             }
+        }
+
+
+
     }
 
 
