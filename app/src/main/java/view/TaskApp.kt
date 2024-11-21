@@ -7,6 +7,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import data.AppDatabase
 import data.Task
@@ -40,22 +42,36 @@ fun TaskApp(database: AppDatabase) {
 
     ) {
         Row {
-            androidx.compose.material.OutlinedTextField(
+            OutlinedTextField(
                 value = newTaskName,
                 onValueChange = { newTaskName = it },
-                label = { androidx.compose.material.Text("Tarea") },
+                label = {
+                    Text(
+                        text = "Tarea",
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold
+                        ),)
+
+                },
                 modifier = Modifier
                     .width(150.dp)
                     .padding(end = 3.dp)
-                    .background(Color(0xFFF1C7FF))
+//                    .background(Color(0xFFF1C7FF))
             )
-            androidx.compose.material.OutlinedTextField(
+            OutlinedTextField(
                 value = newTypeTaskName,
                 onValueChange = { newTypeTaskName = it },
-                label = { androidx.compose.material.Text("Tipo") },
+                label = {
+                    Text(
+                        text = "Tipo",
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold
+                        ),)
+
+                },
                 modifier = Modifier
                     .width(150.dp)
-                    .background(Color(0xFFF1C7FF))
+//                    .background(Color(0xFFF1C7FF))
             )
             Button(
                 onClick = {
@@ -68,13 +84,20 @@ fun TaskApp(database: AppDatabase) {
             }
         }
         Row {
-            androidx.compose.material.OutlinedTextField(
+            OutlinedTextField(
                 value = newTaskDesc,
                 onValueChange = { newTaskDesc = it },
-                label = { androidx.compose.material.Text("Descripción") },
+                label = {
+                    Text(
+                        text = "Descripción",
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold
+                        ),)
+
+                        },
                 modifier = Modifier
                     .width(380.dp)
-                    .background(Color(0xFFF1C7FF))
+//                    .background(Color(0xFFF1C7FF))
             )
         }
         Row(
@@ -83,7 +106,7 @@ fun TaskApp(database: AppDatabase) {
                 .padding(top = 20.dp, bottom = 20.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            androidx.compose.material.Button(
+            Button(
                 modifier = Modifier
                     .width(170.dp)
                     .height(50.dp),
@@ -109,7 +132,7 @@ fun TaskApp(database: AppDatabase) {
                     }
                 }
             ) {
-                androidx.compose.material.Text("Añadir Tarea")
+                Text("Añadir Tarea")
             }
         }
         Row(
@@ -124,14 +147,15 @@ fun TaskApp(database: AppDatabase) {
                  Text(
                      text = "Lista de Tareas",
                      style = MaterialTheme.typography.h5,
-                     modifier = Modifier.padding(bottom = 16.dp)
+                     modifier = Modifier.padding(bottom = 35.dp),
+                     fontWeight = FontWeight.Bold
                  )
 
                  // Mostrar lista de tareas
                  tasks.forEach { taskWithTypeTask ->
                      val task = taskWithTypeTask.task
                      val typeTask = taskWithTypeTask.typeTask
-                     androidx.compose.material.Text(
+                     Text(
                          text = "${task.titulo} - ${task.descripcion} (${typeTask.titulo})",
                          modifier = Modifier.padding(vertical = 8.dp)
                      )
