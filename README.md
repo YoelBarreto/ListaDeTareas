@@ -9,8 +9,9 @@ El modelo de los datos seguira esta estructura:
  ## Boceto de la interfaz
 
 Es la idea de la interfaz antes de crear el programa para saber como organizarlo.
- 
- ![lista](https://github.com/user-attachments/assets/dffa689a-c105-4c8c-900b-840de6acb519)
+
+![lista2](https://github.com/user-attachments/assets/4b195fd5-4616-4f78-afde-0cc1517c4cdf)
+
 
 ## App
 
