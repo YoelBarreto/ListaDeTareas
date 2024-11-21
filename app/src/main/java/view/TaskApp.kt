@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import data.AppDatabase
 import data.Task
 import data.TaskWithTypeTask
@@ -80,7 +81,10 @@ fun TaskApp(database: AppDatabase) {
                     .padding(start = 5.dp, top = 5.dp)
                     .height(60.dp)
             ) {
-                Text("Editar")
+                Text(
+                    text = "Editar Tipos",
+                    fontSize = 13.sp
+                )
             }
         }
         Row {
@@ -148,7 +152,8 @@ fun TaskApp(database: AppDatabase) {
                      text = "Lista de Tareas",
                      style = MaterialTheme.typography.h5,
                      modifier = Modifier.padding(bottom = 35.dp),
-                     fontWeight = FontWeight.Bold
+                     fontWeight = FontWeight.Bold,
+                     fontSize = 35.sp
                  )
 
                  // Mostrar lista de tareas
@@ -162,8 +167,6 @@ fun TaskApp(database: AppDatabase) {
                  }
              }
         }
-
-
 
     }
 
