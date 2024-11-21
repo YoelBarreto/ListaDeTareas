@@ -2,6 +2,8 @@ package view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,8 +41,8 @@ fun TaskApp(database: AppDatabase) {
         modifier = Modifier
             .background(Color(0xFFEAA9FF))
             .fillMaxSize()
-            .padding(15.dp),
-
+            .padding(15.dp)
+            .verticalScroll(state = rememberScrollState()),
     ) {
         Row {
             OutlinedTextField(
@@ -130,6 +132,7 @@ fun TaskApp(database: AppDatabase) {
 
                         tasks =
                             taskDao.getTasksWithTypeTasks() // Actualizar lista con relación completa
+                        // Limpiar los cambios de input
                         newTaskName = ""
                         newTaskDesc = ""
                         newTypeTaskName = ""
@@ -156,25 +159,21 @@ fun TaskApp(database: AppDatabase) {
                      fontSize = 35.sp
                  )
 
-                 // Mostrar lista de tareas
-                 tasks.forEach { taskWithTypeTask ->
-                     val task = taskWithTypeTask.task
-                     val typeTask = taskWithTypeTask.typeTask
-                     Text(
-                         text = "${task.titulo} - ${task.descripcion} (${typeTask.titulo})",
-                         modifier = Modifier.padding(vertical = 8.dp)
-                     )
+                 Column {
+                     // Mostrar lista de tareas
+                     tasks.forEach { taskWithTypeTask ->
+                         val task = taskWithTypeTask.task
+                         val typeTask = taskWithTypeTask.typeTask
+                         Text(
+                             text = "${task.titulo} - ${task.descripcion} (${typeTask.titulo})",
+                             modifier = Modifier.padding(vertical = 8.dp)
+                         )
+                     }
                  }
              }
         }
 
     }
-
-
-
-
-
-
 
 
 
