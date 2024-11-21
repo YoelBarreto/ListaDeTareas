@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.yoel.listadetareas"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.yoel.listadetareas"
