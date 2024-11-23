@@ -26,3 +26,8 @@ Es la idea de la parte de edición de tipos para las tareas
 ## App
 
 N/A
+
+
+# Estado
+
+Actualmente esta en un aproximado del 60%/100% del trabajo.
