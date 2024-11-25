@@ -132,8 +132,7 @@ fun TaskApp(database: AppDatabase) {
                             typeTaskId = insertedTypeId
                         )
                         taskDao.insertTask(newTask)
-
-                        tasks = taskDao.getTasksWithTypeTasks() // Actualizar lista de tareas
+                        tasks = taskDao.getTasksWithTypeTasks()
                         // Limpiar los cambios de input
                         newTaskName = ""
                         newTaskDesc = ""
@@ -163,82 +162,75 @@ fun TaskApp(database: AppDatabase) {
                  Column {
                      // Mostrar lista de tareas
                      tasks.forEach { taskWithTypeTask ->
+                         Box(
+                             modifier = Modifier
+                                 .padding(bottom = 10.dp)
+                                 .clip(shape = RoundedCornerShape(10.dp))
+                                 .background(Color(0xFFF1C7FF))
+                                 .height(75.dp)
+                         ) {
+                             Row(
+                                 modifier = Modifier.fillMaxWidth(),
+                                 horizontalArrangement = Arrangement.End
+                             ) {
+                                 Column(
+                                     modifier = Modifier
+                                         .weight(0.25f)
+                                         .padding(start = 5.dp, top = 10.dp)
+                                 ) {
+                                     Text(
+                                         text = "${taskWithTypeTask.task.titulo} #${taskWithTypeTask.task.id}",
+                                         fontSize = 18.sp,
+                                         fontWeight = FontWeight.Bold
+                                     )
+                                     Text(
+                                         text = "${taskWithTypeTask.typeTask.titulo} #${taskWithTypeTask.typeTask.id}",
+                                         fontSize = 10.sp,
+                                         fontWeight = FontWeight.Bold
+                                     )
+                                 }
 
+                                 Column(
+                                     modifier = Modifier
+                                         .weight(0.4f)
+                                         .padding(start = 10.dp, end = 10.dp)
+                                 ) {
+                                     Text(taskWithTypeTask.task.descripcion)
+                                 }
+                                 Row(
+                                     modifier = Modifier
+                                         .weight(0.5f)
+                                         .padding(end = 5.dp),
+                                     horizontalArrangement = Arrangement.Center
+                                 ) {
+                                     Button(
+                                         onClick = {
+                                         },
+                                         modifier = Modifier.weight(1f),
+                                     ) {
+                                         Text(
+                                             text = "Editar",
+                                             modifier = Modifier,
+                                             fontSize = 10.sp
+                                         )
+                                     }
+                                     Button(
+                                         onClick = {
+                                         },
+                                         modifier = Modifier.weight(1f)
+                                     ) {
+                                         Text(
+                                             text = "Eliminar",
+                                             modifier = Modifier,
+                                             fontSize = 10.sp
+                                         )
+                                     }
+                                 }
+                             }
+                         }
                      }
                  }
              }
         }
     }
 }
-
-//Box(
-//modifier = Modifier
-//.padding(bottom = 10.dp)
-//.clip(shape = RoundedCornerShape(10.dp))
-//.background(Color(0xFFF1C7FF))
-//.height(75.dp)
-//) {
-//    Row(
-//        modifier = Modifier.fillMaxWidth(),
-//        horizontalArrangement = Arrangement.Center,
-//        verticalAlignment = Alignment.CenterVertically
-//    ) {
-//        Column(
-//            modifier = Modifier
-//                .weight(0.25f)
-//                .padding(start = 5.dp, top = 10.dp)
-//        ) {
-//            Text(
-//                text = "${taskWithTypeTask.task.titulo} #${taskWithTypeTask.task.id}",
-//                fontSize = 18.sp,
-//                fontWeight = FontWeight.Bold
-//            )
-//            Text(
-//                text = "${taskWithTypeTask.typeTask.titulo} #${taskWithTypeTask.typeTask.id}",
-//                fontSize = 10.sp,
-//                fontWeight = FontWeight.Bold
-//            )
-//        }
-//
-//        Column(
-//            modifier = Modifier
-//                .weight(0.4f)
-//                .padding(10.dp)
-//        ) {
-//            Text(taskWithTypeTask.task.descripcion)
-//        }
-//        Row(
-//            modifier = Modifier
-//                .weight(0.5f)
-//                .padding(end = 5.dp),
-//            horizontalArrangement = Arrangement.Center
-//        ) {
-//            Button(
-//                onClick = {
-//
-//                },
-//                modifier = Modifier.weight(1f)
-//                    .padding(end = 5.dp),
-//
-//                ) {
-//                Text(
-//                    text = "Editar",
-//                    modifier = Modifier,
-//                    fontSize = 10.sp
-//                )
-//            }
-//            Button(
-//                onClick = {
-//
-//                },
-//                modifier = Modifier.weight(1f)
-//            ) {
-//                Text(
-//                    text = "Eliminar",
-//                    modifier = Modifier,
-//                    fontSize = 10.sp
-//                )
-//            }
-//        }
-//    }
-//}
