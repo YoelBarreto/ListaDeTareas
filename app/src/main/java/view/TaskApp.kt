@@ -161,7 +161,6 @@ fun TaskApp(database: AppDatabase) {
                      fontWeight = FontWeight.Bold,
                      fontSize = 35.sp
                  )
-
                  Column {
                      // Mostrar lista de tareas
                      tasks.forEach { taskWithTypeTask ->
@@ -170,27 +169,74 @@ fun TaskApp(database: AppDatabase) {
                                  .padding(bottom = 10.dp)
                                  .clip(shape = RoundedCornerShape(10.dp))
                                  .background(Color(0xFFF1C7FF))
-                                 .height(65.dp)
-                         ){
-                            Row(modifier = Modifier.fillMaxWidth()) {
+                                 .height(75.dp)
+                         ) {
+                             Row(
+                                 modifier = Modifier.fillMaxWidth(),
+                                 horizontalArrangement = Arrangement.End
+                             ) {
+                                 Column(
+                                     modifier = Modifier
+                                         .weight(0.25f)
+                                         .padding(start = 5.dp, top = 10.dp)
+                                 ) {
+                                     Text(
+                                         text = "${taskWithTypeTask.task.titulo} #${taskWithTypeTask.task.id}",
+                                         fontSize = 18.sp,
+                                         fontWeight = FontWeight.Bold
+                                     )
+                                     Text(
+                                         text = "${taskWithTypeTask.typeTask.titulo} #${taskWithTypeTask.typeTask.id}",
+                                         fontSize = 10.sp,
+                                         fontWeight = FontWeight.Bold
+                                     )
+                                 }
 
+                                 Column(
+                                     modifier = Modifier
+                                         .weight(0.4f)
+                                         .padding(start = 10.dp, end = 10.dp)
+                                 ) {
+                                     Text(taskWithTypeTask.task.descripcion)
+                                 }
 
+                                 Row(
+                                     modifier = Modifier
+                                         .weight(0.5f)
+                                         .padding(end = 5.dp),
+                                     horizontalArrangement = Arrangement.Center
+                                 ) {
+                                     Button(
+                                         onClick = {
 
+                                         },
+                                         modifier = Modifier.weight(1f),
 
+                                     ) {
+                                         Text(
+                                             text = "Editar",
+                                             modifier = Modifier,
+                                             fontSize = 10.sp
+                                         )
+                                     }
+                                     Button(
+                                         onClick = {
 
-
-
-
-                                val task = taskWithTypeTask.task
-                                val typeTask = taskWithTypeTask.typeTask
-                                Text(
-                                    text = "${task.titulo} - ${task.descripcion} (${typeTask.titulo})",
-                                    modifier = Modifier.padding(vertical = 8.dp)
-                                )
-                            }
+                                         },
+                                         modifier = Modifier.weight(1f)
+                                     ) {
+                                         Text(
+                                             text = "Eliminar",
+                                             modifier = Modifier,
+                                             fontSize = 10.sp
+                                         )
+                                     }
+                                 }
+                             }
                          }
                      }
                  }
+
              }
         }
 
