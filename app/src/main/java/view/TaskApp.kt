@@ -241,3 +241,9 @@ fun TaskApp(database: AppDatabase) {
         }
     }
 }
+
+// Pantalla configuración de tipos de tarea
+@Composable
+fun TypeCustom() {
+
+}
