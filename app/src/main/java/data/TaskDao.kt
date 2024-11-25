@@ -10,10 +10,6 @@ interface TaskDao {
     @Query("SELECT * FROM tasks")
     suspend fun getAllTasks(): List<Task>
 
-    @Transaction
-    @Query("SELECT * FROM tasks")
-    suspend fun getTasksWithTypeTasks(): List<TaskWithTypeTask> // Relación con TypeTask
-
     @Update
     suspend fun updateTask(task: Task)
 
