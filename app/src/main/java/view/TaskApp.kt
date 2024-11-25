@@ -28,13 +28,20 @@ fun TaskApp(database: AppDatabase) {
     val taskDao = database.taskDao()
     val typeTaskDao = database.typeTaskDao()
     val scope = rememberCoroutineScope()
+
+    // Clases de datos
     var tasks by remember { mutableStateOf(listOf<TaskWithTypeTask>()) }
     var typeTasks by remember { mutableStateOf(listOf<TypeTask>()) }
+
+    // Inputs
     var newTaskName by remember { mutableStateOf("") }
     var newTaskDesc by remember { mutableStateOf("") }
     var newTypeTaskName by remember { mutableStateOf("") }
+
+    // Tipos de tarea
     var TypeSelected by remember { mutableStateOf("- Tipo") }
     var expandedType by remember { mutableStateOf(false) }
+
 
     // Cargar tareas al iniciar
     LaunchedEffect(Unit) {
@@ -90,10 +97,28 @@ fun TaskApp(database: AppDatabase) {
                 label = { Text("Tipo") },
                 modifier = Modifier.weight(1f).padding(end = 5.dp)
             )
-            TextButton(
+            Button(
+                modifier = Modifier.height(65.dp).padding(top = 5.dp),
                 onClick = { expandedType = true }
             ) {
-                Text("Seleccionar tipo")
+                Text("Seleccionar")
+            }
+            DropdownMenu(
+                expanded = expandedType,
+                onDismissRequest = { expandedType = false }
+            ) {
+                typeTasks.forEach { type ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(type.titulo)
+                        },
+                        onClick = {
+                            newTipoTarea = type.id
+                            TypeSelected = type.titulo
+                            expandedType = false
+                        }
+                    )
+                }
             }
 
 
