@@ -33,6 +33,8 @@ fun TaskApp(database: AppDatabase) {
     var newTaskName by remember { mutableStateOf("") }
     var newTaskDesc by remember { mutableStateOf("") }
     var newTypeTaskName by remember { mutableStateOf("") }
+    var TypeSelected by remember { mutableStateOf("- Tipo") }
+    var expandedType by remember { mutableStateOf(false) }
 
     // Cargar tareas al iniciar
     LaunchedEffect(Unit) {
@@ -65,35 +67,6 @@ fun TaskApp(database: AppDatabase) {
 //                    .background(Color(0xFFF1C7FF))
             )
             OutlinedTextField(
-                value = newTypeTaskName,
-                onValueChange = { newTypeTaskName = it },
-                label = {
-                    Text(
-                        text = "Tipo",
-                        style = TextStyle(
-                            fontWeight = FontWeight.Bold
-                        ),)
-
-                },
-                modifier = Modifier
-                    .width(150.dp)
-//                    .background(Color(0xFFF1C7FF))
-            )
-            Button(
-                onClick = {
-                },
-                modifier = Modifier
-                    .padding(start = 5.dp, top = 5.dp)
-                    .height(60.dp)
-            ) {
-                Text(
-                    text = "Editar Tipos",
-                    fontSize = 13.sp
-                )
-            }
-        }
-        Row {
-            OutlinedTextField(
                 value = newTaskDesc,
                 onValueChange = { newTaskDesc = it },
                 label = {
@@ -103,11 +76,55 @@ fun TaskApp(database: AppDatabase) {
                             fontWeight = FontWeight.Bold
                         ),)
 
-                        },
+                },
                 modifier = Modifier
-                    .width(380.dp)
+                    .width(250.dp))
 //                    .background(Color(0xFFF1C7FF))
+
+        }
+        Row {
+            OutlinedTextField(
+                value = TypeSelected,
+                onValueChange = { TypeSelected = it },
+                readOnly = true,
+                label = { Text("Tipo") },
+                modifier = Modifier.weight(1f).padding(end = 5.dp)
             )
+            TextButton(
+                onClick = { expandedType = true }
+            ) {
+                Text("Seleccionar tipo")
+            }
+
+
+//            OutlinedTextField(
+//                value = newTypeTaskName,
+//                onValueChange = { newTypeTaskName = it },
+//                label = {
+//                    Text(
+//                        text = "Tipo",
+//                        style = TextStyle(
+//                            fontWeight = FontWeight.Bold
+//                        ),)
+//
+//                },
+//                modifier = Modifier
+//                    .width(150.dp)
+//                    .background(Color(0xFFF1C7FF))
+//                  )
+            Button(
+                onClick = {
+                },
+                modifier = Modifier
+                    .padding(start = 5.dp, top = 5.dp)
+                    .height(60.dp)
+                    .width(75.dp)
+            ) {
+                Text(
+                    text = "Editar Tipos",
+                    fontSize = 13.sp
+                )
+            }
         }
         Row(
             modifier = Modifier
