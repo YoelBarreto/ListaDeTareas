@@ -6,6 +6,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,11 +38,11 @@ fun TaskApp(database: AppDatabase) {
     // Inputs
     var newTaskName by remember { mutableStateOf("") }
     var newTaskDesc by remember { mutableStateOf("") }
-    var newTypeTaskName by remember { mutableStateOf("") }
 
     // Tipos de tarea
     var TypeSelected by remember { mutableStateOf("- Tipo") }
     var expandedType by remember { mutableStateOf(false) }
+    var newTypeid by remember { mutableStateOf(0) }
 
 
     // Cargar tareas al iniciar
@@ -108,12 +110,13 @@ fun TaskApp(database: AppDatabase) {
                 onDismissRequest = { expandedType = false }
             ) {
                 typeTasks.forEach { type ->
+
                     DropdownMenuItem(
                         text = {
                             Text(type.titulo)
                         },
                         onClick = {
-                            newTipoTarea = type.id
+                            newTypeid = type.id
                             TypeSelected = type.titulo
                             expandedType = false
                         }
@@ -121,22 +124,6 @@ fun TaskApp(database: AppDatabase) {
                 }
             }
 
-
-//            OutlinedTextField(
-//                value = newTypeTaskName,
-//                onValueChange = { newTypeTaskName = it },
-//                label = {
-//                    Text(
-//                        text = "Tipo",
-//                        style = TextStyle(
-//                            fontWeight = FontWeight.Bold
-//                        ),)
-//
-//                },
-//                modifier = Modifier
-//                    .width(150.dp)
-//                    .background(Color(0xFFF1C7FF))
-//                  )
             Button(
                 onClick = {
                 },
@@ -163,22 +150,20 @@ fun TaskApp(database: AppDatabase) {
                     .height(50.dp),
                 onClick = {
                     scope.launch(Dispatchers.IO) {
-                        val newType = TypeTask(titulo = newTypeTaskName)
-                        typeTaskDao.insertTypeTask(newType)
-
-                        val insertedTypeId = typeTaskDao.getAllTypeTasks()
-                            .last().id // Obtener el ID del nuevo TypeTask
-                        val newTask = Task(
-                            titulo = newTaskName,
-                            descripcion = newTaskDesc,
-                            typeTaskId = insertedTypeId
+                        taskDao.insertTask(
+                            Task(
+                                titulo = newTaskName,
+                                descripcion = newTaskDesc,
+                                typeTaskId = newTypeid
+                            )
                         )
-                        taskDao.insertTask(newTask)
-                        tasks = taskDao.getTasksWithTypeTasks()
                         // Limpiar los cambios de input
                         newTaskName = ""
                         newTaskDesc = ""
-                        newTypeTaskName = ""
+                        newTypeid = 0
+
+                        // Refresca las lista de tareas
+                        tasks = taskDao.getTasksWithTypeTasks()
                     }
                 }
             ) {
@@ -196,7 +181,6 @@ fun TaskApp(database: AppDatabase) {
              ) {
                  Text(
                      text = "Lista de Tareas",
-                     style = MaterialTheme.typography.h5,
                      modifier = Modifier.padding(bottom = 35.dp),
                      fontWeight = FontWeight.Bold,
                      fontSize = 35.sp
