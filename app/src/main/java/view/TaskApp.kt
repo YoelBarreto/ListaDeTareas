@@ -133,8 +133,7 @@ fun TaskApp(database: AppDatabase) {
                         )
                         taskDao.insertTask(newTask)
 
-                        tasks =
-                            taskDao.getTasksWithTypeTasks() // Actualizar lista con relación completa
+                        tasks = taskDao.getTasksWithTypeTasks() // Actualizar lista de tareas
                         // Limpiar los cambios de input
                         newTaskName = ""
                         newTaskDesc = ""
@@ -164,143 +163,82 @@ fun TaskApp(database: AppDatabase) {
                  Column {
                      // Mostrar lista de tareas
                      tasks.forEach { taskWithTypeTask ->
-                         Box(
-                             modifier = Modifier
-                                 .padding(bottom = 10.dp)
-                                 .clip(shape = RoundedCornerShape(10.dp))
-                                 .background(Color(0xFFF1C7FF))
-                                 .height(75.dp)
-                         ) {
-                             Row(
-                                 modifier = Modifier.fillMaxWidth(),
-                                 horizontalArrangement = Arrangement.End
-                             ) {
-                                 Column(
-                                     modifier = Modifier
-                                         .weight(0.25f)
-                                         .padding(start = 5.dp, top = 10.dp)
-                                 ) {
-                                     Text(
-                                         text = "${taskWithTypeTask.task.titulo} #${taskWithTypeTask.task.id}",
-                                         fontSize = 18.sp,
-                                         fontWeight = FontWeight.Bold
-                                     )
-                                     Text(
-                                         text = "${taskWithTypeTask.typeTask.titulo} #${taskWithTypeTask.typeTask.id}",
-                                         fontSize = 10.sp,
-                                         fontWeight = FontWeight.Bold
-                                     )
-                                 }
 
-                                 Column(
-                                     modifier = Modifier
-                                         .weight(0.4f)
-                                         .padding(start = 10.dp, end = 10.dp)
-                                 ) {
-                                     Text(taskWithTypeTask.task.descripcion)
-                                 }
-
-                                 Row(
-                                     modifier = Modifier
-                                         .weight(0.5f)
-                                         .padding(end = 5.dp),
-                                     horizontalArrangement = Arrangement.Center
-                                 ) {
-                                     Button(
-                                         onClick = {
-
-                                         },
-                                         modifier = Modifier.weight(1f),
-
-                                     ) {
-                                         Text(
-                                             text = "Editar",
-                                             modifier = Modifier,
-                                             fontSize = 10.sp
-                                         )
-                                     }
-                                     Button(
-                                         onClick = {
-
-                                         },
-                                         modifier = Modifier.weight(1f)
-                                     ) {
-                                         Text(
-                                             text = "Eliminar",
-                                             modifier = Modifier,
-                                             fontSize = 10.sp
-                                         )
-                                     }
-                                 }
-                             }
-                         }
                      }
                  }
-
              }
         }
-
     }
+}
 
-
-
-
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .padding(16.dp),
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally
+//Box(
+//modifier = Modifier
+//.padding(bottom = 10.dp)
+//.clip(shape = RoundedCornerShape(10.dp))
+//.background(Color(0xFFF1C7FF))
+//.height(75.dp)
+//) {
+//    Row(
+//        modifier = Modifier.fillMaxWidth(),
+//        horizontalArrangement = Arrangement.Center,
+//        verticalAlignment = Alignment.CenterVertically
 //    ) {
-//        // Campo de texto para agregar una nueva tarea
-//        androidx.compose.material.OutlinedTextField(
-//            value = newTaskName,
-//            onValueChange = { newTaskName = it },
-//            label = { androidx.compose.material.Text("Tarea") },
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//        androidx.compose.material.OutlinedTextField(
-//            value = newTaskDesc,
-//            onValueChange = { newTaskDesc = it },
-//            label = { androidx.compose.material.Text("Descripción") },
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//        androidx.compose.material.OutlinedTextField(
-//            value = newTypeTaskName,
-//            onValueChange = { newTypeTaskName = it },
-//            label = { androidx.compose.material.Text("Tipo") },
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//
-//        // Botón para agregar tarea
-//        androidx.compose.material.Button(
-//            onClick = {
-//                scope.launch(Dispatchers.IO) {
-//                    val newType = TypeTask(titulo = newTypeTaskName)
-//                    typeTaskDao.insertTypeTask(newType)
-//
-//                    val insertedTypeId = typeTaskDao.getAllTypeTasks().last().id // Obtener el ID del nuevo TypeTask
-//                    val newTask = Task(titulo = newTaskName, descripcion = newTaskDesc, typeTaskId = insertedTypeId)
-//                    taskDao.insertTask(newTask)
-//
-//                    tasks = taskDao.getTasksWithTypeTasks() // Actualizar lista con relación completa
-//                    newTaskName = ""
-//                    newTaskDesc = ""
-//                    newTypeTaskName = ""
-//                }
-//            }
+//        Column(
+//            modifier = Modifier
+//                .weight(0.25f)
+//                .padding(start = 5.dp, top = 10.dp)
 //        ) {
-//            androidx.compose.material.Text("Add Task")
-//        }
-//
-//        // Mostrar lista de tareas
-//        tasks.forEach { taskWithTypeTask ->
-//            val task = taskWithTypeTask.task
-//            val typeTask = taskWithTypeTask.typeTask
-//            androidx.compose.material.Text(
-//                text = "${task.titulo} - ${task.descripcion} (${typeTask.titulo})",
-//                modifier = Modifier.padding(vertical = 8.dp)
+//            Text(
+//                text = "${taskWithTypeTask.task.titulo} #${taskWithTypeTask.task.id}",
+//                fontSize = 18.sp,
+//                fontWeight = FontWeight.Bold
+//            )
+//            Text(
+//                text = "${taskWithTypeTask.typeTask.titulo} #${taskWithTypeTask.typeTask.id}",
+//                fontSize = 10.sp,
+//                fontWeight = FontWeight.Bold
 //            )
 //        }
+//
+//        Column(
+//            modifier = Modifier
+//                .weight(0.4f)
+//                .padding(10.dp)
+//        ) {
+//            Text(taskWithTypeTask.task.descripcion)
+//        }
+//        Row(
+//            modifier = Modifier
+//                .weight(0.5f)
+//                .padding(end = 5.dp),
+//            horizontalArrangement = Arrangement.Center
+//        ) {
+//            Button(
+//                onClick = {
+//
+//                },
+//                modifier = Modifier.weight(1f)
+//                    .padding(end = 5.dp),
+//
+//                ) {
+//                Text(
+//                    text = "Editar",
+//                    modifier = Modifier,
+//                    fontSize = 10.sp
+//                )
+//            }
+//            Button(
+//                onClick = {
+//
+//                },
+//                modifier = Modifier.weight(1f)
+//            ) {
+//                Text(
+//                    text = "Eliminar",
+//                    modifier = Modifier,
+//                    fontSize = 10.sp
+//                )
+//            }
+//        }
 //    }
-}
+//}
