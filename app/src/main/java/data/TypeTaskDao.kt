@@ -15,4 +15,7 @@ interface TypeTaskDao {
 
     @Delete
     suspend fun deleteTypeTask(typeTask: TypeTask)
+
+    @Query("SELECT titulo FROM type_tasks WHERE id = :id")
+    suspend fun getTitleById(id: Int): String?
 }
