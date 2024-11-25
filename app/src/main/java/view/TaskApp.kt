@@ -170,8 +170,9 @@ fun TaskApp(database: AppDatabase) {
                                  .height(75.dp)
                          ) {
                              Row(
-                                 modifier = Modifier.fillMaxWidth(),
-                                 horizontalArrangement = Arrangement.End
+                                 modifier = Modifier.fillMaxSize(),
+                                 horizontalArrangement = Arrangement.Center,
+                                 verticalAlignment = Alignment.CenterVertically
                              ) {
                                  Column(
                                      modifier = Modifier
@@ -206,7 +207,8 @@ fun TaskApp(database: AppDatabase) {
                                      Button(
                                          onClick = {
                                          },
-                                         modifier = Modifier.weight(1f),
+                                         modifier = Modifier.weight(1f)
+                                             .padding(end = 5.dp),
                                      ) {
                                          Text(
                                              text = "Editar",
@@ -216,6 +218,11 @@ fun TaskApp(database: AppDatabase) {
                                      }
                                      Button(
                                          onClick = {
+                                             scope.launch(Dispatchers.IO) {
+                                                 taskDao.deleteTask(taskWithTypeTask.task)
+
+                                                 tasks = taskDao.getTasksWithTypeTasks()
+                                             }
                                          },
                                          modifier = Modifier.weight(1f)
                                      ) {
