@@ -8,6 +8,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.AlertDialog
@@ -238,7 +241,7 @@ fun TaskApp(database: AppDatabase) {
                              ) {
                                  Column(
                                      modifier = Modifier
-                                         .weight(0.25f)
+                                         .weight(0.35f)
                                          .padding(start = 5.dp, top = 10.dp)
                                  ) {
                                      Text(
@@ -255,29 +258,24 @@ fun TaskApp(database: AppDatabase) {
 
                                  Column(
                                      modifier = Modifier
-                                         .weight(0.4f)
+                                         .weight(0.6f)
                                          .padding(start = 10.dp, end = 10.dp)
                                  ) {
                                      Text(taskWithTypeTask.task.descripcion)
                                  }
                                  Row(
                                      modifier = Modifier
-                                         .weight(0.5f)
+                                         .weight(0.4f)
                                          .padding(end = 5.dp),
                                      horizontalArrangement = Arrangement.Center
                                  ) {
-                                     Button(
+                                     androidx.compose.material.IconButton(
+                                         modifier = Modifier,
                                          onClick = {
                                              showDialog = true
-                                         },
-                                         modifier = Modifier.weight(1f)
-                                             .padding(end = 5.dp),
+                                         }
                                      ) {
-                                         Text(
-                                             text = "Editar",
-                                             modifier = Modifier,
-                                             fontSize = 10.sp
-                                         )
+                                         Icon(Icons.Default.Edit, contentDescription = "Editar")
                                      }
                                      // Ventana edición tarea
                                      if (showDialog) {
@@ -356,16 +354,19 @@ fun TaskApp(database: AppDatabase) {
                                              confirmButton = {
                                                  TextButton(
                                                      onClick = {
-                                                         scope.launch(Dispatchers.IO) {
-                                                             taskDao.updateTask(
-                                                                 Task(
-                                                                     titulo = TaskName,
-                                                                     descripcion = TaskDesc,
-                                                                     typeTaskId = Typeid
+                                                         try {
+                                                             scope.launch(Dispatchers.IO) {
+                                                                 taskDao.updateTask(
+                                                                     Task(
+                                                                         titulo = TaskName,
+                                                                         descripcion = TaskDesc,
+                                                                         typeTaskId = Typeid
+                                                                     )
                                                                  )
-                                                             )
-                                                             tasks = taskDao.getTasksWithTypeTasks()
-                                                             showDialog = false
+                                                                 showDialog = false
+                                                             }
+                                                         } catch (e: Exception) {
+                                                             Log.i("Error", e.toString())
                                                          }
                                                      }
                                                  ) {
@@ -382,8 +383,8 @@ fun TaskApp(database: AppDatabase) {
                                          TaskName = ""
                                          TaskDesc = ""
                                      }
-
-                                     Button(
+                                     androidx.compose.material.IconButton(
+                                         modifier = Modifier,
                                          onClick = {
                                              scope.launch(Dispatchers.IO) {
                                                  try {
@@ -395,14 +396,9 @@ fun TaskApp(database: AppDatabase) {
 
                                                  }
                                              }
-                                         },
-                                         modifier = Modifier.weight(1f)
+                                         }
                                      ) {
-                                         Text(
-                                             text = "Eliminar",
-                                             modifier = Modifier,
-                                             fontSize = 10.sp
-                                         )
+                                         Icon(Icons.Default.Delete, contentDescription = "Eliminar")
                                      }
                                  }
                              }
