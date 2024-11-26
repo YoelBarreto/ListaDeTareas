@@ -1,5 +1,6 @@
 package view
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -28,7 +29,13 @@ import kotlinx.coroutines.launch
 // Pantalla configuración de tarea
 @Composable
 fun TaskEdit() {
-    
+
+}
+
+// Pantalla configuración de tipo de tarea
+@Composable
+fun TaskTypeEdit() {
+
 }
 
 
@@ -56,8 +63,12 @@ fun TaskApp(database: AppDatabase) {
 
     // Cargar tareas al iniciar
     LaunchedEffect(Unit) {
-        typeTasks = typeTaskDao.getAllTypeTasks()
-        tasks = taskDao.getTasksWithTypeTasks()
+        try {
+            typeTasks = typeTaskDao.getAllTypeTasks()
+            tasks = taskDao.getTasksWithTypeTasks()
+        } catch (e: Exception) {
+            Log.i("Error", e.toString())
+        }
     }
 
     Column(
@@ -158,20 +169,24 @@ fun TaskApp(database: AppDatabase) {
                     .height(50.dp),
                 onClick = {
                     scope.launch(Dispatchers.IO) {
-                        taskDao.insertTask(
-                            Task(
-                                titulo = newTaskName,
-                                descripcion = newTaskDesc,
-                                typeTaskId = newTypeid
+                        try {
+                            taskDao.insertTask(
+                                Task(
+                                    titulo = newTaskName,
+                                    descripcion = newTaskDesc,
+                                    typeTaskId = newTypeid
+                                )
                             )
-                        )
-                        // Limpiar los cambios de input
-                        newTaskName = ""
-                        newTaskDesc = ""
-                        newTypeid = 0
+                            // Limpiar los cambios de input
+                            newTaskName = ""
+                            newTaskDesc = ""
+                            newTypeid = 0
 
-                        // Refresca las lista de tareas
-                        tasks = taskDao.getTasksWithTypeTasks()
+                            // Refresca las lista de tareas
+                            tasks = taskDao.getTasksWithTypeTasks()
+                        } catch (e: Exception) {
+                            Log.i("Error", e.toString())
+                        }
                     }
                 }
             ) {
@@ -253,9 +268,14 @@ fun TaskApp(database: AppDatabase) {
                                      Button(
                                          onClick = {
                                              scope.launch(Dispatchers.IO) {
-                                                 taskDao.deleteTask(taskWithTypeTask.task)
+                                                 try {
+                                                     taskDao.deleteTask(taskWithTypeTask.task)
 
-                                                 tasks = taskDao.getTasksWithTypeTasks()
+                                                     tasks = taskDao.getTasksWithTypeTasks()
+                                                 } catch (e: Exception) {
+                                                     Log.i("Error", e.toString())
+
+                                                 }
                                              }
                                          },
                                          modifier = Modifier.weight(1f)
