@@ -25,6 +25,15 @@ import data.TypeTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+// Pantalla configuración de tarea
+@Composable
+fun TaskEdit() {
+
+}
+
+
+
+
 @Composable
 fun TaskApp(database: AppDatabase) {
     val taskDao = database.taskDao()
@@ -89,7 +98,6 @@ fun TaskApp(database: AppDatabase) {
                 modifier = Modifier
                     .width(250.dp))
 //                    .background(Color(0xFFF1C7FF))
-
         }
         Row {
             OutlinedTextField(
@@ -266,10 +274,4 @@ fun TaskApp(database: AppDatabase) {
              }
         }
     }
-}
-
-// Pantalla configuración de tipos de tarea
-@Composable
-fun TypeCustom() {
-
 }
