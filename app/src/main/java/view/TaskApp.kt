@@ -70,6 +70,8 @@ fun TaskApp(database: AppDatabase) {
     var showDialog by remember { mutableStateOf(false) }
     var TaskName by remember { mutableStateOf("") }
     var TaskDesc by remember { mutableStateOf("") }
+    var Typeid by remember { mutableStateOf(0) }
+
 
 
     // Cargar tareas al iniciar
@@ -341,7 +343,7 @@ fun TaskApp(database: AppDatabase) {
                                                                          Text(type.titulo)
                                                                      },
                                                                      onClick = {
-                                                                         newTypeid = type.id
+                                                                         Typeid = type.id
                                                                          newTypeSelected = type.titulo
                                                                          newExpandedType = false
                                                                      }
@@ -352,7 +354,23 @@ fun TaskApp(database: AppDatabase) {
                                                  }
                                              },
                                              confirmButton = {
-
+                                                 TextButton(
+                                                     onClick = {
+                                                         scope.launch(Dispatchers.IO) {
+                                                             taskDao.updateTask(
+                                                                 Task(
+                                                                     titulo = TaskName,
+                                                                     descripcion = TaskDesc,
+                                                                     typeTaskId = Typeid
+                                                                 )
+                                                             )
+                                                             tasks = taskDao.getTasksWithTypeTasks()
+                                                             showDialog = false
+                                                         }
+                                                     }
+                                                 ) {
+                                                     Text("Confirmar")
+                                                 }
                                              },
                                              dismissButton = {
                                                  TextButton(onClick = { showDialog = false }) {
