@@ -30,4 +30,4 @@ N/A
 
 # Estado
 
-Actualmente esta en un aproximado del 65%/100% del trabajo.
+Actualmente esta en un aproximado del 75%/100% del trabajo.
