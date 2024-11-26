@@ -65,6 +65,8 @@ fun TaskApp(database: AppDatabase) {
     var newTypeid by remember { mutableStateOf(0) }
 
     //Editar tarea
+    var newTypeSelected by remember { mutableStateOf("- Tipo") }
+    var newExpandedType by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
     var TaskName by remember { mutableStateOf("") }
     var TaskDesc by remember { mutableStateOf("") }
@@ -275,6 +277,7 @@ fun TaskApp(database: AppDatabase) {
                                              fontSize = 10.sp
                                          )
                                      }
+                                     // Ventana edición tarea
                                      if (showDialog) {
                                          AlertDialog(
                                              onDismissRequest = { showDialog = false },
@@ -310,6 +313,42 @@ fun TaskApp(database: AppDatabase) {
                                                          },
                                                          modifier = Modifier
                                                      )
+                                                     Row {
+                                                         OutlinedTextField(
+                                                             value = newTypeSelected,
+                                                             onValueChange = { newTypeSelected = it },
+                                                             readOnly = true,
+                                                             label = { Text("Tipo") },
+                                                             modifier = Modifier.width(160.dp)
+                                                         )
+                                                         Button(
+                                                             modifier = Modifier
+                                                                 .width(120.dp)
+                                                                 .height(60.dp)
+                                                                 .padding(top = 5.dp, start = 5.dp),
+                                                             onClick = { newExpandedType = true }
+                                                         ) {
+                                                             Text("Seleccionar")
+                                                         }
+                                                         DropdownMenu(
+                                                             expanded = newExpandedType,
+                                                             onDismissRequest = { newExpandedType = false }
+                                                         ) {
+                                                             typeTasks.forEach { type ->
+
+                                                                 DropdownMenuItem(
+                                                                     text = {
+                                                                         Text(type.titulo)
+                                                                     },
+                                                                     onClick = {
+                                                                         newTypeid = type.id
+                                                                         newTypeSelected = type.titulo
+                                                                         newExpandedType = false
+                                                                     }
+                                                                 )
+                                                             }
+                                                         }
+                                                     }
                                                  }
                                              },
                                              confirmButton = {
