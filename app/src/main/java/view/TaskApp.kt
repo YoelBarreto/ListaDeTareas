@@ -206,13 +206,13 @@ fun TaskApp(database: AppDatabase) {
                                          .padding(start = 5.dp, top = 10.dp)
                                  ) {
                                      Text(
-                                         text = "${taskWithTypeTask.task.titulo} #${taskWithTypeTask.task.id}",
+                                         text = taskWithTypeTask.task.titulo,
                                          fontSize = 18.sp,
                                          fontWeight = FontWeight.Bold
                                      )
                                      Text(
                                          text = "${taskWithTypeTask.typeTask.titulo} #${taskWithTypeTask.typeTask.id}",
-                                         fontSize = 10.sp,
+                                         fontSize = 12.sp,
                                          fontWeight = FontWeight.Bold
                                      )
                                  }
