@@ -1,5 +1,6 @@
 package view
 
+import android.app.AlertDialog
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,6 +10,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +44,7 @@ fun TaskTypeEdit() {
 
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskApp(database: AppDatabase) {
     val taskDao = database.taskDao()
@@ -59,6 +63,11 @@ fun TaskApp(database: AppDatabase) {
     var TypeSelected by remember { mutableStateOf("- Tipo") }
     var expandedType by remember { mutableStateOf(false) }
     var newTypeid by remember { mutableStateOf(0) }
+
+    //Editar tarea
+    var showDialog by remember { mutableStateOf(false) }
+    var TaskName by remember { mutableStateOf("") }
+    var TaskDesc by remember { mutableStateOf("") }
 
 
     // Cargar tareas al iniciar
@@ -255,6 +264,7 @@ fun TaskApp(database: AppDatabase) {
                                  ) {
                                      Button(
                                          onClick = {
+                                             showDialog = true
                                          },
                                          modifier = Modifier.weight(1f)
                                              .padding(end = 5.dp),
@@ -265,6 +275,57 @@ fun TaskApp(database: AppDatabase) {
                                              fontSize = 10.sp
                                          )
                                      }
+                                     if (showDialog) {
+                                         AlertDialog(
+                                             onDismissRequest = { showDialog = false },
+                                             title = { Text("Editar Tarea") },
+                                             text = {
+                                                 Column(
+                                                     verticalArrangement = Arrangement.Center,
+                                                     horizontalAlignment = Alignment.CenterHorizontally
+                                                 ) {
+                                                     OutlinedTextField(
+                                                         value = TaskName,
+                                                         onValueChange = { TaskName = it },
+                                                         label = {
+                                                             Text(
+                                                                 text = "Tarea",
+                                                                 style = TextStyle(
+                                                                     fontWeight = FontWeight.Bold
+                                                                 ),)
+
+                                                         },
+                                                         modifier = Modifier
+                                                     )
+                                                     OutlinedTextField(
+                                                         value = TaskDesc,
+                                                         onValueChange = { TaskDesc = it },
+                                                         label = {
+                                                             Text(
+                                                                 text = "Descripción",
+                                                                 style = TextStyle(
+                                                                     fontWeight = FontWeight.Bold
+                                                                 ),)
+
+                                                         },
+                                                         modifier = Modifier
+                                                     )
+                                                 }
+                                             },
+                                             confirmButton = {
+
+                                             },
+                                             dismissButton = {
+                                                 TextButton(onClick = { showDialog = false }) {
+                                                     Text("Cancelar")
+                                                 }
+                                             }
+                                         )
+                                     } else {
+                                         TaskName = ""
+                                         TaskDesc = ""
+                                     }
+
                                      Button(
                                          onClick = {
                                              scope.launch(Dispatchers.IO) {
