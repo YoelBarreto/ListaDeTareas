@@ -11,10 +11,10 @@ import androidx.room.Relation
             entity = TypeTask::class,
             parentColumns = ["id"],
             childColumns = ["typeTaskId"],
-            onDelete = androidx.room.ForeignKey.CASCADE // Opcional: para borrar tareas relacionadas al eliminar un tipo.
+            onDelete = androidx.room.ForeignKey.CASCADE // Borrar tareas relacionadas al eliminar un tipo.
         )
     ],
-    indices = [androidx.room.Index(value = ["typeTaskId"])] // Mejora las consultas.
+    indices = [androidx.room.Index(value = ["typeTaskId"])]
 )
 
 data class Task(
