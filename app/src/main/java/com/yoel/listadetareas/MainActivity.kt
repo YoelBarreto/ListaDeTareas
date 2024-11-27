@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         database = AppDatabase.getDatabase(this)
         setContent {
             //TaskApp(database)
-            TaskApp(database)
+            NavigatorApp(database)
         }
     }
 }

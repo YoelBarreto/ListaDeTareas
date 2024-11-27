@@ -30,9 +30,20 @@ import data.TypeTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@Composable
+fun NavigatorApp(database: AppDatabase) {
+    // Estado para controlar la vista actual
+    var currentView by remember { mutableStateOf("TaskApp") }
+
+    // Mostrar dinámicamente las vistas según el estado
+    when (currentView) {
+        "TaskApp" -> TaskApp(database) { currentView = "TypeTaskApp" }
+        "TypeTaskApp" -> TypeTaskApp(database) { currentView = "TaskApp" }
+    }
+}
 
 @Composable
-fun TypeTaskApp(database: AppDatabase) {
+fun TypeTaskApp(database: AppDatabase, onNavigateToTypeTasks: () -> Unit) {
     val typeTaskDao = database.typeTaskDao()
     val scope = rememberCoroutineScope()
     var typeTasks by remember { mutableStateOf(listOf<TypeTask>()) }
@@ -191,7 +202,7 @@ fun TypeTaskApp(database: AppDatabase) {
 
 
 @Composable
-fun TaskApp(database: AppDatabase) {
+fun TaskApp(database: AppDatabase, onNavigateToTypeTasks: () -> Unit) {
     val taskDao = database.taskDao()
     val typeTaskDao = database.typeTaskDao()
     val scope = rememberCoroutineScope()
@@ -304,7 +315,7 @@ fun TaskApp(database: AppDatabase) {
 
             Button(
                 onClick = {
-                    TypeTaskApp()
+                    TypeTaskApp(database: AppDatabase)
                 },
                 modifier = Modifier
                     .padding(start = 5.dp, top = 5.dp)
