@@ -14,13 +14,11 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -33,7 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun TaskApp(database: AppDatabase) {
     val taskDao = database.taskDao()
@@ -344,6 +342,7 @@ fun TaskApp(database: AppDatabase) {
                                                  TextButton(
                                                      onClick = {
                                                          try {
+                                                             // Actualizar tarea
                                                              scope.launch(Dispatchers.IO) {
                                                                  taskDao.updateTask(
                                                                      Task(
