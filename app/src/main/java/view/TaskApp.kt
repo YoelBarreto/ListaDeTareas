@@ -32,20 +32,6 @@ import data.TypeTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-// Pantalla configuración de tarea
-@Composable
-fun TaskEdit() {
-
-}
-
-// Pantalla configuración de tipo de tarea
-@Composable
-fun TaskTypeEdit() {
-
-}
-
-
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -87,6 +73,7 @@ fun TaskApp(database: AppDatabase) {
         }
     }
 
+    // Pantalla principal
     Column(
         modifier = Modifier
             .background(Color(0xFFEAA9FF))
@@ -184,6 +171,7 @@ fun TaskApp(database: AppDatabase) {
                     .width(170.dp)
                     .height(50.dp),
                 onClick = {
+                    // Corrutina para añadir tarea
                     scope.launch(Dispatchers.IO) {
                         try {
                             taskDao.insertTask(
@@ -225,8 +213,9 @@ fun TaskApp(database: AppDatabase) {
                      fontSize = 35.sp
                  )
                  Column {
-                     // Mostrar lista de tareas
+                     // Mostrar la lista de tareas
                      tasks.forEach { taskWithTypeTask ->
+                         // Tarjeta de tarea
                          Box(
                              modifier = Modifier
                                  .padding(bottom = 10.dp)
@@ -370,7 +359,7 @@ fun TaskApp(database: AppDatabase) {
                                                          }
                                                      }
                                                  ) {
-                                                     Text("Confirmar")
+                                                     Text("Aztualizar")
                                                  }
                                              },
                                              dismissButton = {
@@ -379,6 +368,7 @@ fun TaskApp(database: AppDatabase) {
                                                  }
                                              }
                                          )
+                                         // Clickear fuera limpia los campos
                                      } else {
                                          TaskName = ""
                                          TaskDesc = ""
