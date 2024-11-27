@@ -43,7 +43,7 @@ fun NavigatorApp(database: AppDatabase) {
 }
 
 @Composable
-fun TypeTaskApp(database: AppDatabase, onNavigateToTypeTasks: () -> Unit) {
+fun TypeTaskApp(database: AppDatabase, onNavigateBack: () -> Unit) {
     val typeTaskDao = database.typeTaskDao()
     val scope = rememberCoroutineScope()
     var typeTasks by remember { mutableStateOf(listOf<TypeTask>()) }
@@ -59,7 +59,9 @@ fun TypeTaskApp(database: AppDatabase, onNavigateToTypeTasks: () -> Unit) {
             Log.i("Error", e.toString())
         }
     }
-
+    Button(onClick = { onNavigateBack() }, modifier = Modifier.padding(10.dp)) {
+        Text("Volver")
+    }
     Column(
         modifier = Modifier
             .background(Color(0xFFEAA9FF))
@@ -67,13 +69,16 @@ fun TypeTaskApp(database: AppDatabase, onNavigateToTypeTasks: () -> Unit) {
             .padding(15.dp)
             .verticalScroll(state = rememberScrollState()),
     ) {
+        Button(onClick = { onNavigateBack() }, modifier = Modifier.padding(10.dp)) {
+            Text("Volver")
+        }
         Row {
             OutlinedTextField(
                 value = newTypeTaskName,
                 onValueChange = { newTypeTaskName = it },
                 label = {
                     Text(
-                        text = "Tipo tarea",
+                        text = "Tipo tipo",
                         style = TextStyle(
                             fontWeight = FontWeight.Bold
                         ),)
@@ -134,9 +139,9 @@ fun TypeTaskApp(database: AppDatabase, onNavigateToTypeTasks: () -> Unit) {
                     fontSize = 35.sp
                 )
                 Column {
-                    // Mostrar la lista de tareas
+                    // Mostrar la lista de tipo de tareas
                     typeTasks.forEach { typeTask ->
-                        // Tarjeta de tarea
+                        // Tarjeta de tipos
                         Box(
                             modifier = Modifier
                                 .padding(bottom = 10.dp)
@@ -315,7 +320,7 @@ fun TaskApp(database: AppDatabase, onNavigateToTypeTasks: () -> Unit) {
 
             Button(
                 onClick = {
-                    TypeTaskApp(database: AppDatabase)
+                    onNavigateToTypeTasks()
                 },
                 modifier = Modifier
                     .padding(start = 5.dp, top = 5.dp)
